@@ -49,9 +49,6 @@ var timeperiod int64 = 3 // second
 
 
 func BatteryStatusHandle(str_b string) {
-    // wake up handle
-    SysSWWH.WakeJudgment()
-    
 	batterystatus := make(map[string]string)
     if strings.Contains(str_b, str_f) {
         log.Println("This is the string I want")
@@ -87,6 +84,12 @@ func BatteryStatusHandle(str_b string) {
                 lastchargestatusint = chargestatusint
                 SysSW.UpdateLockStatus("chargelock", chargestatusint)
             }
+        }
+
+        if chargestatusint == 1 {
+            log.Println("RA got an event for power supplier")
+            // wake up handle
+            SysSWWH.WakeJudgment()
         }
 
         // battery capacity handle
